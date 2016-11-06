@@ -29,6 +29,8 @@ kitchen test
 
 ## Release History
 
+* 1.1.0
+    * add nfs-utils functionality
 * 1.0.0
     * Initial Release
 

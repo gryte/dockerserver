@@ -19,3 +19,8 @@ end
 service 'docker' do
   action [:enable, :start]
 end
+
+# install nfs-utils
+package 'nfs-utils' do
+  action :install
+end

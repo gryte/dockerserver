@@ -14,3 +14,8 @@ end
 describe group('docker') do
   it { should exist }
 end
+
+# nfs-utils package is installed
+describe package('nfs-utils') do
+  it { should be_installed }
+end
