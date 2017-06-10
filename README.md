@@ -29,6 +29,9 @@ kitchen test
 
 ## Release History
 
+* 1.2.0
+    * add firewalld features
+
 * 1.1.0
     * add nfs-utils functionality
 * 1.0.0
