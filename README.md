@@ -29,6 +29,9 @@ kitchen test
 
 ## Release History
 
+* 1.3.0
+    * install docker-compose
+
 * 1.2.0
     * add firewalld features
 
