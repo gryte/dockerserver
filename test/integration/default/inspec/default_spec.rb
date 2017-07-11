@@ -31,3 +31,9 @@ end
 describe iptables(chain: 'INPUT_direct') do
   it { should have_rule('-A INPUT_direct -p tcp -m tcp -m multiport --dports 22 -m comment --comment ssh -j ACCEPT') }
 end
+
+# docker-compose is installed
+describe file('/usr/local/bin/docker-compose') do
+  it { should exist }
+  it { should be_executable }
+end

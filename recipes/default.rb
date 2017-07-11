@@ -35,3 +35,12 @@ firewall_rule 'ssh' do
   port 22
   command :allow
 end
+
+# install docker-compose
+remote_file '/usr/local/bin/docker-compose' do
+  source "https://github.com/docker/compose/releases/download/1.14.0/docker-compose-#{node['os']}-#{node['packages']['kernel']['arch']}"
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
