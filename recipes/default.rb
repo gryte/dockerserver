@@ -10,23 +10,37 @@ firewall 'default' do
 end
 
 # Install required packages
-yum_package 'yum-utils' do
-  action :install
-end
 
-yum_package 'device-mapper-persistent-data' do
-  action :install
-end
-
-yum_package 'lvm2' do
+yum_package %w(yum-utils device-mapper-persistent-data lvm2) do
   action :install
 end
 
 # add the stable docker-ce yum repo
-# for the life of me I can't figure out how to do this with the yum_repository resource
-execute 'add stable docker-ce repo' do
-  command 'yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo'
+yum_repository 'docker-ce-stable' do
+  description 'Docker CE Stable - $basearch'
+  baseurl 'https://download-stage.docker.com/linux/centos/7/$basearch/stable'
+  enabled true
+  gpgcheck true
+  gpgkey 'https://download-stage.docker.com/linux/centos/gpg'
+  repositoryid 'docker-ce'
+
+=begin
+[docker-ce-stable]
+name=Docker CE Stable - $basearch
+baseurl=https://download-stage.docker.com/linux/centos/7/$basearch/stable
+enabled=1
+gpgcheck=1
+gpgkey=https://download-stage.docker.com/linux/centos/gpg
+=end
+
 end
+
+# for the life of me I can't figure out how to do this with the yum_repository resource
+=begin
+execute 'add stable docker-ce repo' do
+  command 'sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo'
+end
+=end
 
 # install docker-ce
 yum_package 'docker-ce' do
