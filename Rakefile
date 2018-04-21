@@ -11,14 +11,9 @@ task :foodcritic do
   sh 'foodcritic . -X test'
 end
 
-desc 'Knife upload dockerserver cookbook to test environment'
-task :upload_test do
-  sh 'knife cookbook upload -o .. dockerserver -E test --force'
-end
-
-desc 'Knife upload dockerserver cookbook to prod environment'
-task :upload_prod do
-  sh 'knife cookbook upload -o .. dockerserver -E prod'
+desc 'Berks upload dockerserver cookbook'
+task :upload do
+  sh 'berks upload'
 end
 
 desc 'Delete testserver node'
@@ -35,6 +30,6 @@ desc 'Remove testserver from chef server'
 task remove_test: [:deletenode_test, :deleteclient_test]
 
 desc 'Bootstrap test server'
-task bootstrap_test: [:upload_test] do
+task bootstrap_test: [:upload] do
   sh 'knife bootstrap 192.168.1.125 -E test -N testserver --sudo --ssh-user test --ssh-password test --use-sudo-password --bootstrap-version 12.19.36'
 end
