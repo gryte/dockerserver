@@ -23,24 +23,7 @@ yum_repository 'docker-ce-stable' do
   gpgcheck true
   gpgkey 'https://download-stage.docker.com/linux/centos/gpg'
   repositoryid 'docker-ce'
-
-=begin
-[docker-ce-stable]
-name=Docker CE Stable - $basearch
-baseurl=https://download-stage.docker.com/linux/centos/7/$basearch/stable
-enabled=1
-gpgcheck=1
-gpgkey=https://download-stage.docker.com/linux/centos/gpg
-=end
-
 end
-
-# for the life of me I can't figure out how to do this with the yum_repository resource
-=begin
-execute 'add stable docker-ce repo' do
-  command 'sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo'
-end
-=end
 
 # install docker-ce
 yum_package 'docker-ce' do
