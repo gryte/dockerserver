@@ -31,5 +31,5 @@ task remove_test: [:deletenode_test, :deleteclient_test]
 
 desc 'Bootstrap test server'
 task bootstrap_test: [:upload] do
-  sh 'knife bootstrap 192.168.1.125 -E test -N testserver --sudo --ssh-user test --ssh-password test --use-sudo-password --bootstrap-version 14.0.202'
+  sh 'knife bootstrap 192.168.1.125 -E test -N testserver -r role[dockerserver_role] --sudo --ssh-user test --ssh-password test --use-sudo-password --bootstrap-version 14.0.202'
 end
