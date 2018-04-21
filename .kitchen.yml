@@ -5,7 +5,8 @@ driver:
 provisioner:
   name: chef_zero
   always_update_cookbooks: true
-  require_chef_omnibus: "12"
+  product_name: chef
+  product_version: 14
 
 verifier:
   name: inspec

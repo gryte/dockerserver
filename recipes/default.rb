@@ -9,14 +9,27 @@ firewall 'default' do
   action :install
 end
 
-# add the yum repo
-cookbook_file '/etc/yum.repos.d/docker.repo' do
-  source 'docker.repo'
-  action :create
+# Install required packages
+yum_package 'yum-utils' do
+  action :install
 end
 
-# install docker
-package 'docker-engine' do
+yum_package 'device-mapper-persistent-data' do
+  action :install
+end
+
+yum_package 'lvm2' do
+  action :install
+end
+
+# add the stable docker-ce yum repo
+# for the life of me I can't figure out how to do this with the yum_repository resource
+execute 'add stable docker-ce repo' do
+  command 'yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo'
+end
+
+# install docker-ce
+yum_package 'docker-ce' do
   action :install
 end
 
