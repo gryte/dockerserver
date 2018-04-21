@@ -9,14 +9,24 @@ firewall 'default' do
   action :install
 end
 
-# add the yum repo
-cookbook_file '/etc/yum.repos.d/docker.repo' do
-  source 'docker.repo'
-  action :create
+# Install required packages
+
+yum_package %w(yum-utils device-mapper-persistent-data lvm2) do
+  action :install
 end
 
-# install docker
-package 'docker-engine' do
+# add the stable docker-ce yum repo
+yum_repository 'docker-ce-stable' do
+  description 'Docker CE Stable - $basearch'
+  baseurl 'https://download-stage.docker.com/linux/centos/7/$basearch/stable'
+  enabled true
+  gpgcheck true
+  gpgkey 'https://download-stage.docker.com/linux/centos/gpg'
+  repositoryid 'docker-ce'
+end
+
+# install docker-ce
+yum_package 'docker-ce' do
   action :install
 end
 
