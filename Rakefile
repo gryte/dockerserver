@@ -40,6 +40,6 @@ desc 'Remove testserver from chef server'
 task remove_test: [:deletenode_test, :deleteclient_test]
 
 desc 'Bootstrap test server'
-task bootstrap_test: [:berksupload] do
-  sh 'knife bootstrap 192.168.1.234 -E test -N testserver -r role[base_role],role[dockerserver_role] --sudo --ssh-user test --ssh-password test --use-sudo-password --bootstrap-version 14.4.56'
+task bootstrap_test: [:berksupload, :remove_test] do
+  sh 'knife bootstrap 192.168.1.234 -E test -N testserver -r role[base_role],role[dockerserver_role] --sudo --ssh-user test --ssh-password test --use-sudo-password --bootstrap-version 14.4.56 --bootstrap-vault-item slack:webhooks'
 end
