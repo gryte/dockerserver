@@ -1,5 +1,5 @@
 desc 'Define default task'
-task default: [:cookstyle, :foodcritic]
+task default: [:cookstyle, :foodcritic, :berksupdate, :kitchentest, :berksupload]
 
 desc 'Run cookstyle'
 task :cookstyle do
@@ -11,8 +11,18 @@ task :foodcritic do
   sh 'foodcritic . --tags ~FC069 --tags ~FC078'
 end
 
+desc 'Run berks update in current directory'
+task :berksupdate do
+  sh 'berks update'
+end
+
+desc 'Run kitchen test in current directory'
+task :kitchentest do
+  sh 'kitchen test'
+end
+
 desc 'Berks upload dockerserver cookbook'
-task :upload do
+task :berksupload do
   sh 'berks upload'
 end
 
@@ -31,5 +41,5 @@ task remove_test: [:deletenode_test, :deleteclient_test]
 
 desc 'Bootstrap test server'
 task bootstrap_test: [:upload] do
-  sh 'knife bootstrap 192.168.1.234 -E test -N testserver -r role[base_role],role[dockerserver_role] --sudo --ssh-user test --ssh-password test --use-sudo-password --bootstrap-version 14.1.1'
+  sh 'knife bootstrap 192.168.1.234 -E test -N testserver -r role[base_role],role[dockerserver_role] --sudo --ssh-user test --ssh-password test --use-sudo-password --bootstrap-version 14.4.56'
 end
