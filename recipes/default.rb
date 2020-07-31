@@ -68,7 +68,7 @@ firewall_rule 'kubelet' do
 end
 
 # open ports for Node driver Docker daemon TLS port
-firewall_rule 'node-driver-docker-daemon-tls-port' do
+firewall_rule 'nd-drvr-dckr-dmn-tls-prt' do
   protocol :tcp
   port 2376
   command :allow
