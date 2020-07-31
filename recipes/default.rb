@@ -46,6 +46,27 @@ firewall_rule 'ssh' do
   command :allow
 end
 
+# open ports for Kubernetes API (K3s server nodes)
+firewall_rule 'plex-htc-cmpn' do
+  protocol :tcp
+  port 6443
+  command :allow
+end
+
+# open ports for Flannel VXLAN (K3s server and agent nodes)
+firewall_rule 'bonjour-avahi' do
+  protocol :udp
+  port 8472
+  command :allow
+end
+
+# open ports for kubelet (K3s server and agent nodes)
+firewall_rule 'plex-htc-cmpn' do
+  protocol :tcp
+  port 10250
+  command :allow
+end
+
 # install docker-compose
 remote_file '/usr/local/bin/docker-compose' do
   source node['dockerserver']['docker-compose']['install_url']
