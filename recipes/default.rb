@@ -137,6 +137,27 @@ firewall_rule 'nodeport-port-range-udp' do
   command :allow
 end
 
+# open ports for traefik 
+firewall_rule 'traefik-443' do
+  protocol :tcp
+  port 443
+  command :allow
+end
+
+# open ports for traefik 
+firewall_rule 'traefik-80' do
+  protocol :tcp
+  port 80
+  command :allow
+end
+
+# open ports for traefik 
+firewall_rule 'traefik-8080' do
+  protocol :tcp
+  port 8080
+  command :allow
+end
+
 # install docker-compose
 remote_file '/usr/local/bin/docker-compose' do
   source node['dockerserver']['docker-compose']['install_url']
