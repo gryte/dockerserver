@@ -137,25 +137,35 @@ firewall_rule 'nodeport-port-range-udp' do
   command :allow
 end
 
-# open ports for traefik 
+# open ports for traefik
 firewall_rule 'traefik-443' do
   protocol :tcp
   port 443
   command :allow
 end
 
-# open ports for traefik 
+# open ports for traefik
 firewall_rule 'traefik-80' do
   protocol :tcp
   port 80
   command :allow
 end
 
-# open ports for traefik 
+# open ports for traefik
 firewall_rule 'traefik-8080' do
   protocol :tcp
   port 8080
   command :allow
+end
+
+# fixe both CoreDNS and Traefik
+# https://github.com/rancher/k3s/issues/24#issuecomment-475567218
+firewall_rule 'fix-coredns' do
+  raw 'ipv4 filter INPUT 1 -i cni0 -s 10.42.0.0/16 -j ACCEPT'
+end
+
+firewall_rule 'fix-traefik' do
+  raw 'ipv4 filter FORWARD 1 -s 10.42.0.0/15 -j ACCEPT'
 end
 
 # install docker-compose
