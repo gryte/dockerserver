@@ -161,7 +161,7 @@ end
 # fix both CoreDNS and Traefik
 # https://github.com/rancher/k3s/issues/24#issuecomment-475567218
 firewall_rule 'fix-coredns' do
-  raw 'ipv4 filter INPUT 1 -i cni0 -s 10.42.0.0/16 -j ACCEPT'
+  raw 'ipv4 filter INPUT 1 -i cni0 -s 10.42.0.0/15 -j ACCEPT'
 end
 
 firewall_rule 'fix-traefik' do
