@@ -158,7 +158,7 @@ firewall_rule 'traefik-8080' do
   command :allow
 end
 
-# fixe both CoreDNS and Traefik
+# fix both CoreDNS and Traefik
 # https://github.com/rancher/k3s/issues/24#issuecomment-475567218
 firewall_rule 'fix-coredns' do
   raw 'ipv4 filter INPUT 1 -i cni0 -s 10.42.0.0/16 -j ACCEPT'
@@ -166,6 +166,11 @@ end
 
 firewall_rule 'fix-traefik' do
   raw 'ipv4 filter FORWARD 1 -s 10.42.0.0/15 -j ACCEPT'
+end
+
+# pass traffic from docker0 interface
+firewall_rule 'trust-docker0' do
+  raw '--zone=trusted --change-interface=docker0'
 end
 
 # install docker-compose
