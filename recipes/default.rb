@@ -169,8 +169,13 @@ firewall_rule 'fix-traefik' do
 end
 
 # pass traffic from docker0 interface
-firewall_rule 'trust-docker0' do
-  raw '--zone=trusted --change-interface=docker0'
+execute 'trust-docker0' do
+  command 'firewall-cmd --permanent --zone=trusted --change-interface=docker0'
+end
+
+# restart firewalld
+firewall 'default' do
+  action :restart
 end
 
 # install docker-compose
