@@ -186,3 +186,8 @@ remote_file '/usr/local/bin/docker-compose' do
   mode '0755'
   action :create
 end
+
+# install rsync
+package 'rsync' do
+  action :install
+end
